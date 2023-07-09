@@ -32,6 +32,7 @@ console.log(arrow_right);
 //recuperer le src de l'image et extraire le nom du fichier
 
 const banner_img = document.getElementById("banner-img");
+const bannerp = document.getElementById("banner-p");
 var filename =  banner_img.src.replace(/^.*[\\\/]/, '');
 console.log(filename);
 
@@ -49,41 +50,51 @@ arrow_left.addEventListener("click", () => {
 	console.log("clique a gauche")
 	let image_suivante = 0;
 	let alldot = document.getElementsByClassName("dot");
+	console.log(filename);
+	filename =  banner_img.src.replace(/^.*[\\\/]/, '');
 	for(let i=0;i<slides.length;i++)
 	{
-		if(filename==slides[0].image){
+		if(filename===slides[0].image){
+			banner_img.src="./assets/images/slideshow/"+slides[slides.length-1].image;
+			bannerp.innerHTML=slides[slides.length-1].tagLine;
 			image_suivante= slides.length -1;
-			banner_img.src="./assets/images/slideshow/"+slides[image_suivante].image;
 			alldot[image_suivante].classList.add("dot_selected");
 			alldot[0].classList.remove("dot_selected");
-		}else if(filename==slides[i].image){
-			image_suivante= i-1;
-			banner_img.src="./assets/images/slideshow/"+slides[image_suivante].image;
-			alldot[image_suivante].classList.add("dot_selected");
+		}else if(filename===slides[i].image){
+			banner_img.src="./assets/images/slideshow/"+slides[i-1].image;
+			bannerp.innerHTML=slides[i-1].tagLine;
+			alldot[i-1].classList.add("dot_selected");
 			alldot[i].classList.remove("dot_selected");
+			image_suivante= i-1;
+			
 		}
+		
 	 }
+
   });
 
 
   arrow_right.addEventListener("click", () => {
 	console.log("clique a droite")
-	let image_suivante = 1;
+	let image_suivante = 0;
 	let alldot = document.getElementsByClassName("dot");
-	for(let i=1;i<slides.length;i--)
+	filename =  banner_img.src.replace(/^.*[\\\/]/, '');
+	for(let i=0;i<slides.length;i++)
 	{
-		if(filename==slides[1].image){
-			image_suivante= slides.length +1;
-			banner_img.src="./assets/images/slideshow/"+slides[image_suivante].image;
-			alldot[image_suivante].classList.add("dot_selected");
-			alldot[1].classList.remove("dot_selected");
-		}else if(filename==slides[i].image){
+		if(filename===slides[slides.length -1].image){
+			banner_img.src="./assets/images/slideshow/"+slides[0].image;
+			bannerp.innerHTML=slides[0].tagLine;
+			alldot[0].classList.add("dot_selected");
+			alldot[slides.length -1].classList.remove("dot_selected");
+		}else if(filename===slides[i].image){
+			banner_img.src="./assets/images/slideshow/"+slides[i+1].image;
+			bannerp.innerHTML=slides[i+1].tagLine;
 			image_suivante= i+1;
-			banner_img.src="./assets/images/slideshow/"+slides[image_suivante].image;
 			alldot[image_suivante].classList.add("dot_selected");
 			alldot[i].classList.remove("dot_selected");
 		}
 	 }
+	 
   });
 
  
